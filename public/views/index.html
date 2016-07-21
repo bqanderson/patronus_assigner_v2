@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="patronusAssignerApp">
+<head>
+  <meta charset="utf-8" />
+  <title>Patronus Assigner</title>
+  <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/styles.css" />
+  <link href="https://fonts.googleapis.com/css?family=Mirza|Montserrat" rel="stylesheet">
+  <script src="../vendor/angular.min.js" charset="utf-8"></script>
+  <script src="../scripts/client.js"></script>
+</head>
+<body ng-controller="PatronusAssignerController as pa">
+  <h1>Make the magic happen:</h1>
+  <h2>Patronus Assigner</h2>
+  <label for="person">Please enter your first name followed by your last name:</label>
+  <input type="text" name="person" ng-model="pa.newPerson"/>
+  <button ng-click="pa.addPerson()">Add Person</button>
+  <br />
+
+  <div class="list">
+    <p ng-repeat="item in pa.person track by $index">{{item[$index].first_name}} {{item[$index].last_name}}</p>
+  </div>
+  <br />
+  <label for="patronus">Please enter the patronus type:</label>
+  <input type="text" name="patronus" ng-model="pa.newPatronus" />
+  <button ng-click="pa.addPatronus()">Add Patronus</button>
+  <br />
+  <button ng-click="pa.showList()">Show List</button>
+  <div class="list" ng-show="pa.toggle">
+    <p ng-repeat="item in pa.patronus track by $index">{{item.patronus_name}}</p>
+  </div>
+
+  <div class="list" ng-show="pa.toggle">
+    <p ng-repeat="item in pa.people track by $index">{{item.first_name}} {{item.last_name}}</p>
+  </div>
+
+  <!-- {{pa.unassignedPeople}} -->
+
+    <p>Unassigned People: {{pa.unassignedPerson.first_name}} {{pa.unassignedPerson.last_name}}</p>
+    <p>Assigned People:
+      <li ng-repeat="person in pa.assignedPeople">{{person.first_name}} {{person.last_name}}: {{person.patronus_name}}, </li>
+      <li>
+        <select ng-model="pa.unassignedPerson" ng-options="person.first_name for person in pa.unassignedPeople track by person.id"></select>
+        <select ng-model="pa.unassignedPatronus" ng-options="patronus.patronus_name for patronus in pa.unassignedPatronuses track by patronus.id"></select>
+      </li>
+    </p>
+    <p>Unassigned Patronuses: {{pa.unassignedPatronus.patronus_name}}</p>
+
+    <button ng-click="pa.testButton()">Test</button>
+  <!-- <div ng-repeat="person in pa.unassignedPeople track by $index">
+    {{person.first_name}} {{person.last_name}}
+  </div> -->
+
+
+
+
+</body>
+</html>
